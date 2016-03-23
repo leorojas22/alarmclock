@@ -1,0 +1,26 @@
+<% include header %>
+		
+		<div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3 text-center">
+			<div class="clock">
+				<span id="currentHour">00</span>:<span id="currentMinute"></span>:<span id="currentSecond">00</span>
+			</div>
+		
+			<div class="wakeup-time text-center">
+		
+				<input type="number" id="wakeupHour" min="0" max="23"> : <input type="number" id="wakeupMinute" min="0" max="59">
+				
+			</div>
+			<br><br>
+			<p class="text-center">
+				<button type="button" id="snoozeButton" style="display: none" class="btn btn-lg btn-danger snooze-button">Snooze</button>
+			</p>
+		
+		</div>
+		
+		<div class="clearfix"></div>
+		
+		<audio id="alarm" loop>
+			<source src="/assets/sounds/alarm.wav" type="audio/wav">
+		</audio>
+		
+<% include footer %>
