@@ -31,6 +31,14 @@ io.on("connection", function(socket) {
 		io.emit("snooze-clock");
 	});
 	
+	socket.on("wakeupTimeSet", function(data) {
+		io.emit("wakeupTimeSet", data);
+	});
+	
+	socket.on("getWakeupTime", function() {
+		io.emit("getWakeupTime");
+	});
+	
 	socket.on("disconnect", function() {
 		if(socket == clockSocket) {
 			console.log("Clock Closed");

@@ -30,7 +30,7 @@ $(document).ready(function() {
 		wakeupMinute += amount;
 		
 		if(wakeupMinute > 59) {
-			wakeupMinute = 60 - wakeupMinute;
+			wakeupMinute = wakeupMinute-60;
 			wakeupHour++;
 		}
 		
@@ -98,9 +98,49 @@ $(document).ready(function() {
 		}
 		
 	});
+	
+	$('#wakeupMinute').change(function() {
+		var wakeupMinute = parseInt($(this).val());
+		
+		if(wakeupMinute < 10) {
+			$(this).val("0"+wakeupMinute);
+		}
+		
+	});
+	
+	
+	$('#setWakeupTime').click(function() {
+		
+		$('#wakeupHour').change();
+		$('#wakeupMinute').change();
+		var wakeupData 			= new Object();
+		wakeupData['hour'] 		= $("#wakeupHour").val();
+		wakeupData['minute'] 	= $('#wakeupMinute').val();
+		
+		$("#wakeupHour").attr("disabled", "disabled");
+		$("#wakeupMinute").attr("disabled", "disabled");
+		
+		$(this).data("alarmset", true);
+		
+		socket.emit("wakeupTimeSet", wakeupData);
+	});
 
 	socket.on("snooze", function(data) {
 		$('#snoozeButton').click();
+		$('#setWakeupTime').click();
+	});
+	
+	socket.on("getWakeupTime", function() {
+		
+		var wakeupData = false;
+		if($('#setWakeupTime').data("alarmset")) {
+			wakeupData = new Object();
+			wakeupData['hour'] 		= $("#wakeupHour").val();
+			wakeupData['minute'] 	= $('#wakeupMinute').val();
+		}
+		
+		socket.emit("wakeupTimeSet", wakeupData);
+		
 	});
 	
 });

@@ -22,4 +22,17 @@ $(document).ready(function() {
 		$('#snooze').hide();
 	});
 	
+	socket.on("wakeupTimeSet", function(data) {
+		
+		if(data) {
+			$('#wakeupTime').html(data['hour']+":"+data['minute']);
+		}
+		else {
+			$('#wakeupTime').html("Not Set");
+		}
+		
+	});
+	
+	socket.emit("getWakeupTime");
+	
 });
